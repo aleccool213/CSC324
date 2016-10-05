@@ -68,20 +68,32 @@ inside the "begin".
 (define-syntax record
   (syntax-rules ()
     [
-     (class <Class> (<attr> ...)
+     (
+      record <Class> (<attr> ...)
       [(<method> <param> ...) <body>]
       ...
      )
-     (define (<Class> <attr> ...)
-       (lambda (msg)
-         (cond [(equal? msg (id->string <attr>)) <attr>]
+     (begin
+       (define
+         (<Class> <attr> ...)
+         (lambda (msg)
+           (cond
+             [(equal? msg (id->string <attr>)) <attr>]
              ...
              [(equal? msg (id->string <method>))
               (lambda (<param> ...) <body>)]
              ...
              [else "Attribute error"]
+           )
          )
        )
+       (define
+         <attr>
+         (lambda (class)
+           (class (symbol->string (quote <attr>)))
+         )
+       )
+       ...
      )
     ]
   )
@@ -91,10 +103,10 @@ inside the "begin".
 (define-syntax class
   (syntax-rules ()
     [
-      (class <Class> (<attr> ...)
-       [(<method> <param> ...) <body>]
-       ...
-       )
+      (
+        class <Class> (<attr> ...) [(<method> <param> ...) <body>]
+        ...
+      )
      (define (<Class> <attr> ...)
        (lambda (msg)
          (cond [(equal? msg (id->string <attr>)) <attr>]

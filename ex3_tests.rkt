@@ -39,10 +39,26 @@ Please make sure to test your code thoroughly before submitting!
 ; Tests for record
 (record Point (x y))
 
-;(test (let ([p (Point 2 3)])
-;        (p "x"))
-;      2)
-;
-;(test (let ([p (Point 2 3)])
-;        (x p))
-;      2)
+(test
+  (let
+    ([p (Point 2 3)])
+    (p "x")
+  )
+  2
+)
+
+(test
+  (let
+    ([p (Point 2 3)])
+    (x p)
+  )
+  2
+)
+
+(test
+  (let
+    ([p (Point 2 3)])
+    (y p)
+  )
+  3
+)
